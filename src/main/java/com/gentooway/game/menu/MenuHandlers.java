@@ -4,6 +4,9 @@ import java.util.function.Consumer;
 
 import static com.gentooway.game.Main.printMenu;
 
+/**
+ * Functions for handling menu actions.
+ */
 public class MenuHandlers {
 
     public static final Consumer<String> helpCommandHandler = (command) -> printMenu();

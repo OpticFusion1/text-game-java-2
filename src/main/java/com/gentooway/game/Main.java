@@ -1,6 +1,7 @@
 package com.gentooway.game;
 
 import com.gentooway.game.menu.MenuCommand;
+import com.gentooway.game.model.World;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -9,11 +10,14 @@ import java.util.function.Consumer;
 
 import static com.gentooway.game.menu.MenuCommand.*;
 import static com.gentooway.game.menu.MenuHandlers.*;
+import static com.gentooway.game.service.WorldLoader.loadWorld;
 
 /**
  * Application entry point.
  */
 public class Main {
+
+    private static World world = loadWorld();
 
     private static final Map<MenuCommand, Consumer<String>> commandToHandler =
             new EnumMap<MenuCommand, Consumer<String>>(MenuCommand.class) {
@@ -43,7 +47,7 @@ public class Main {
     }
 
     public static void printMenu() {
-        for (MenuCommand commands : MenuCommand.values()) {
+        for (MenuCommand commands : valuesForState(world.getState())) {
             System.out.println(commands.getValue());
         }
     }

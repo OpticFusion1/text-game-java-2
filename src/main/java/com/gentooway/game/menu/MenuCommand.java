@@ -23,4 +23,14 @@ public enum MenuCommand {
     public String getValue() {
         return value;
     }
+
+    public static MenuCommand getMenuCommand(String command) {
+        for (MenuCommand menuCommand : values()) {
+            if (menuCommand.getValue().equals(command)) {
+                return menuCommand;
+            }
+        }
+
+        return null;
+    }
 }

@@ -6,7 +6,7 @@ public class WorldLoader {
 
     public static World loadWorld() {
         World world = new World();
-        // todo load rooms
+        // todo load rooms from a file
         return world;
     }
 }

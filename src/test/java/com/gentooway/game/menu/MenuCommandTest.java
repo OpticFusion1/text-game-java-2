@@ -27,7 +27,7 @@ class MenuCommandTest {
     void shouldReturnListOfStateDependentMenuCommands() {
         // given
         WorldState state = WorldState.START_MENU;
-        List<MenuCommand> expectedStates = Arrays.asList(HELP, LOAD, EXIT);
+        List<MenuCommand> expectedStates = Arrays.asList(HELP, NEW_GAME, LOAD, EXIT);
 
         // when
         List<MenuCommand> commands = MenuCommand.valuesForState(state);

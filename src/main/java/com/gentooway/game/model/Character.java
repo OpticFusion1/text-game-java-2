@@ -7,7 +7,7 @@ public class Character {
 
     private Integer health = 100;
     private Integer level = 1;
-    private Long experience;
+    private Integer experience = 0;
     private Room currentRoom;
 
     public Integer getHealth() {
@@ -26,11 +26,11 @@ public class Character {
         this.level = level;
     }
 
-    public Long getExperience() {
+    public Integer getExperience() {
         return experience;
     }
 
-    public void setExperience(Long experience) {
+    public void setExperience(Integer experience) {
         this.experience = experience;
     }
 

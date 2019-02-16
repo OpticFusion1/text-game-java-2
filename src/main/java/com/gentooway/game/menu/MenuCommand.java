@@ -15,6 +15,7 @@ import static java.util.Collections.singletonList;
  */
 public enum MenuCommand {
     HELP("help", asList(START_MENU, IN_GAME)),
+    NEW_GAME("new game", singletonList(START_MENU)),
     MOVE_UP("move up", singletonList(IN_GAME)),
     MOVE_DOWN("move down", singletonList(IN_GAME)),
     MOVE_RIGHT("move right", singletonList(IN_GAME)),

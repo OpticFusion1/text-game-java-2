@@ -16,13 +16,16 @@ import static com.gentooway.game.service.WorldLoader.loadWorld;
  */
 public class Game {
 
-    private GameService gameService;
-    private World world = loadWorld();
+    private Scanner scanner;
+    private final GameService gameService;
+    private final World world;
 
     private Map<MenuCommand, Consumer<String>> commandToHandler = new EnumMap<>(MenuCommand.class);
 
     public Game() {
+        this.world = loadWorld();
         this.gameService = new GameService(world);
+        this.scanner = new Scanner(System.in);
 
         initCommandsMap();
     }
@@ -42,17 +45,22 @@ public class Game {
         // todo printGameIntro()
         printMenu();
 
-        try (Scanner scanner = new Scanner(System.in)) {
-            String command = scanner.nextLine();
+        String command = scanner.nextLine();
 
-            while (!EXIT.getValue().equals(command)) {
-                commandToHandler
-                        .getOrDefault(getMenuCommand(command), value -> System.out.println("Unknown command"))
-                        .accept(command);
+        while (!EXIT.getValue().equals(command)) {
+            handleCurrentCommand(command);
 
-                command = scanner.nextLine();
-            }
+            command = scanner.nextLine();
         }
+
+        scanner.close();
+    }
+
+    private void handleCurrentCommand(String command) {
+        commandToHandler
+                .getOrDefault(getMenuCommand(command),
+                        value -> System.out.println("Unknown command"))
+                .accept(command);
     }
 
     private void printMenu() {

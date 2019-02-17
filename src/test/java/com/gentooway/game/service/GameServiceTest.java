@@ -54,4 +54,109 @@ class GameServiceTest {
         assertThat(character.getHealth(), is(100));
         assertThat(character.getLevel(), is(1));
     }
+
+    @Test
+    void shouldMoveToTheUpRoom() {
+        // given
+        Room currentRoom = new Room();
+        currentRoom.setWelcomeMessage("currentRoom message");
+
+        Room upRoom = new Room();
+        upRoom.setWelcomeMessage("upRoom message");
+
+        currentRoom.setUp(upRoom);
+
+        Character character = new Character();
+        character.setCurrentRoom(currentRoom);
+        when(world.getCharacter()).thenReturn(character);
+
+        // when
+        gameService.moveUp();
+
+        // then
+        assertThat(character.getCurrentRoom(), is(upRoom));
+    }
+
+    @Test
+    void shouldMoveToTheDownRoom() {
+        // given
+        Room currentRoom = new Room();
+        currentRoom.setWelcomeMessage("currentRoom message");
+
+        Room downRoom = new Room();
+        downRoom.setWelcomeMessage("downRoom message");
+
+        currentRoom.setDown(downRoom);
+
+        Character character = new Character();
+        character.setCurrentRoom(currentRoom);
+        when(world.getCharacter()).thenReturn(character);
+
+        // when
+        gameService.moveDown();
+
+        // then
+        assertThat(character.getCurrentRoom(), is(downRoom));
+    }
+
+    @Test
+    void shouldMoveToTheLeftRoom() {
+        // given
+        Room currentRoom = new Room();
+        currentRoom.setWelcomeMessage("currentRoom message");
+
+        Room leftRoom = new Room();
+        leftRoom.setWelcomeMessage("leftRoom message");
+
+        currentRoom.setLeft(leftRoom);
+
+        Character character = new Character();
+        character.setCurrentRoom(currentRoom);
+        when(world.getCharacter()).thenReturn(character);
+
+        // when
+        gameService.moveLeft();
+
+        // then
+        assertThat(character.getCurrentRoom(), is(leftRoom));
+    }
+
+    @Test
+    void shouldMoveToTheRightRoom() {
+        // given
+        Room currentRoom = new Room();
+        currentRoom.setWelcomeMessage("currentRoom message");
+
+        Room rightRoom = new Room();
+        rightRoom.setWelcomeMessage("rightRoom message");
+
+        currentRoom.setRight(rightRoom);
+
+        Character character = new Character();
+        character.setCurrentRoom(currentRoom);
+        when(world.getCharacter()).thenReturn(character);
+
+        // when
+        gameService.moveRight();
+
+        // then
+        assertThat(character.getCurrentRoom(), is(rightRoom));
+    }
+
+    @Test
+    void shouldStayAtTheSameRoomIfThereIsNoWay() {
+        // given
+        Room currentRoom = new Room();
+        currentRoom.setWelcomeMessage("currentRoom message");
+
+        Character character = new Character();
+        character.setCurrentRoom(currentRoom);
+        when(world.getCharacter()).thenReturn(character);
+
+        // when
+        gameService.moveUp();
+
+        // then
+        assertThat(character.getCurrentRoom(), is(currentRoom));
+    }
 }

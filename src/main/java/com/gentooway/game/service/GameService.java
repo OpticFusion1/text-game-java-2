@@ -8,6 +8,7 @@ import java.util.List;
 
 import static com.gentooway.game.model.enums.WorldState.IN_GAME;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 /**
  * Service for game to world interactions.
@@ -40,21 +41,45 @@ public class GameService {
         System.out.println("New character was created! Welcome to the game!");
     }
 
-
     public void moveUp() {
-        // todo
+        Character character = world.getCharacter();
+        Room currentRoom = character.getCurrentRoom();
+
+        Room roomUp = currentRoom.getUp();
+        setCurrentRoomOrWriteErrorMessage(character, roomUp);
     }
 
     public void moveDown() {
-        // todo
+        Character character = world.getCharacter();
+        Room currentRoom = character.getCurrentRoom();
+
+        Room roomDown = currentRoom.getDown();
+        setCurrentRoomOrWriteErrorMessage(character, roomDown);
     }
 
     public void moveRight() {
-        // todo
+        Character character = world.getCharacter();
+        Room currentRoom = character.getCurrentRoom();
+
+        Room roomRight = currentRoom.getRight();
+        setCurrentRoomOrWriteErrorMessage(character, roomRight);
     }
 
     public void moveLeft() {
-        // todo
+        Character character = world.getCharacter();
+        Room currentRoom = character.getCurrentRoom();
+
+        Room roomLeft = currentRoom.getLeft();
+        setCurrentRoomOrWriteErrorMessage(character, roomLeft);
+    }
+
+    private void setCurrentRoomOrWriteErrorMessage(Character character, Room room) {
+        if (nonNull(room)) {
+            character.setCurrentRoom(room);
+            System.out.println(room.getWelcomeMessage());
+        } else {
+            System.out.println("You cannot go this way! There is no door!");
+        }
     }
 
     public void save() {

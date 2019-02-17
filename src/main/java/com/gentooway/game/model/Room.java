@@ -5,6 +5,8 @@ package com.gentooway.game.model;
  */
 public class Room {
 
+    private Long id;
+    private String welcomeMessage;
     private Room up;
     private Room down;
     private Room left;
@@ -40,5 +42,21 @@ public class Room {
 
     public void setRight(Room right) {
         this.right = right;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getWelcomeMessage() {
+        return welcomeMessage;
+    }
+
+    public void setWelcomeMessage(String welcomeMessage) {
+        this.welcomeMessage = welcomeMessage;
     }
 }

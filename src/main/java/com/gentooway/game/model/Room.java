@@ -1,9 +1,11 @@
 package com.gentooway.game.model;
 
+import java.io.Serializable;
+
 /**
  * Class for a world room.
  */
-public class Room {
+public class Room implements Serializable {
 
     private Long id;
     private String welcomeMessage;

@@ -1,9 +1,11 @@
 package com.gentooway.game.model;
 
+import java.io.Serializable;
+
 /**
  * Class for a character.
  */
-public class Character {
+public class Character implements Serializable {
 
     private Integer health = 100;
     private Integer level = 1;

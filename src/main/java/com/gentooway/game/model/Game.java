@@ -18,7 +18,7 @@ public class Game {
 
     private Scanner scanner;
     private final GameService gameService;
-    private final World world;
+    private World world;
 
     private Map<MenuCommand, Consumer<String>> commandToHandler = new EnumMap<>(MenuCommand.class);
 

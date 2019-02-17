@@ -4,6 +4,7 @@ import com.gentooway.game.model.Character;
 import com.gentooway.game.model.Room;
 import com.gentooway.game.model.World;
 
+import java.io.*;
 import java.util.List;
 
 import static com.gentooway.game.model.enums.WorldState.IN_GAME;
@@ -41,6 +42,9 @@ public class GameService {
         System.out.println("New character was created! Welcome to the game!");
     }
 
+    /**
+     * Move up.
+     */
     public void moveUp() {
         Character character = world.getCharacter();
         Room currentRoom = character.getCurrentRoom();
@@ -49,6 +53,9 @@ public class GameService {
         setCurrentRoomOrWriteErrorMessage(character, roomUp);
     }
 
+    /**
+     * Move down.
+     */
     public void moveDown() {
         Character character = world.getCharacter();
         Room currentRoom = character.getCurrentRoom();
@@ -57,6 +64,9 @@ public class GameService {
         setCurrentRoomOrWriteErrorMessage(character, roomDown);
     }
 
+    /**
+     * Move right.
+     */
     public void moveRight() {
         Character character = world.getCharacter();
         Room currentRoom = character.getCurrentRoom();
@@ -65,6 +75,9 @@ public class GameService {
         setCurrentRoomOrWriteErrorMessage(character, roomRight);
     }
 
+    /**
+     * Move left.
+     */
     public void moveLeft() {
         Character character = world.getCharacter();
         Room currentRoom = character.getCurrentRoom();
@@ -82,11 +95,41 @@ public class GameService {
         }
     }
 
+    /**
+     * Save the current world state.
+     */
     public void save() {
-        // todo
+        try (FileOutputStream file = new FileOutputStream("world_save");
+             ObjectOutputStream out = new ObjectOutputStream(file)) {
+
+            out.writeObject(world);
+
+            System.out.println("Game has been saved!");
+
+        } catch (IOException e) {
+            System.out.println("Got an error while saving the world state");
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Load the last saved world state.
+     */
     public void load() {
-        // todo
+        try (FileInputStream file = new FileInputStream("world_save");
+             ObjectInputStream in = new ObjectInputStream(file)) {
+
+            this.world = (World) in.readObject();
+
+            System.out.println("Game has been loaded!");
+
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Got an error while loading the world state");
+            e.printStackTrace();
+        }
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

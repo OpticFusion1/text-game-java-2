@@ -11,12 +11,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.nio.file.Paths;
+
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class GameServiceTest {
@@ -158,5 +159,44 @@ class GameServiceTest {
 
         // then
         assertThat(character.getCurrentRoom(), is(currentRoom));
+    }
+
+    @Test
+    void shouldSaveCurrentWorldState() {
+        // when
+        gameService.save();
+
+        // then
+        assertThat(Paths.get("world_save").toFile().exists(), is(true));
+    }
+
+    @Test
+    void shouldLoadSavedWorldState() {
+        // given
+        world = spy(World.class);
+        gameService = new GameService(world);
+
+        Room currentRoom = new Room();
+        currentRoom.setId(1L);
+        currentRoom.setWelcomeMessage("currentRoom message");
+
+        Room rightRoom = new Room();
+        rightRoom.setId(2L);
+        rightRoom.setWelcomeMessage("rightRoom message");
+
+        currentRoom.setRight(rightRoom);
+
+        Character character = new Character();
+        character.setCurrentRoom(currentRoom);
+        world.setCharacter(character);
+
+        gameService.save();
+        gameService.moveRight();
+
+        // when
+        gameService.load();
+
+        // then
+        assertThat(gameService.getWorld().getCharacter().getCurrentRoom().getId(), is(currentRoom.getId()));
     }
 }

@@ -2,6 +2,7 @@ package com.gentooway.game.model;
 
 import com.gentooway.game.model.enums.WorldState;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static com.gentooway.game.model.enums.WorldState.START_MENU;
@@ -9,7 +10,7 @@ import static com.gentooway.game.model.enums.WorldState.START_MENU;
 /**
  * Class for current world state
  */
-public class World {
+public class World implements Serializable {
 
     private List<Room> rooms;
     private Character character;

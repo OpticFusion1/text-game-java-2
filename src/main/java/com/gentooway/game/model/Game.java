@@ -32,6 +32,7 @@ public class Game {
 
     private void initCommandsMap() {
         commandToHandler.put(HELP, command -> printMenu());
+        commandToHandler.put(STATS, command -> gameService.showStats());
         commandToHandler.put(NEW_GAME, command -> gameService.createNewGame());
         commandToHandler.put(MOVE_UP, command -> gameService.moveUp());
         commandToHandler.put(MOVE_DOWN, command -> gameService.moveDown());

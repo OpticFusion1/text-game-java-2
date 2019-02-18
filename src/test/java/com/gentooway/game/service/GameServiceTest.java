@@ -199,4 +199,13 @@ class GameServiceTest {
         // then
         assertThat(gameService.getWorld().getCharacter().getCurrentRoom().getId(), is(currentRoom.getId()));
     }
+
+    @Test
+    void shouldPrintCharacterStats() {
+        // given
+        when(world.getCharacter()).thenReturn(new Character());
+
+        // when
+        gameService.showStats();
+    }
 }

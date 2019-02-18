@@ -129,7 +129,14 @@ public class GameService {
         }
     }
 
-    public World getWorld() {
+    /**
+     * Print a character stats.
+     */
+    public void showStats() {
+        System.out.println(world.getCharacter());
+    }
+
+    World getWorld() {
         return world;
     }
 }

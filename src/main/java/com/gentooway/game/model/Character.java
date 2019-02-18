@@ -43,4 +43,12 @@ public class Character implements Serializable {
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
+
+    @Override
+    public String toString() {
+        return "Character info: " +
+                "\nhealth = " + health +
+                "\nlevel = " + level +
+                "\nexperience = " + experience;
+    }
 }

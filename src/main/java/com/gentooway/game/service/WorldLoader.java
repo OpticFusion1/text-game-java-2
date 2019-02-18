@@ -1,5 +1,6 @@
 package com.gentooway.game.service;
 
+import com.gentooway.game.model.Creature;
 import com.gentooway.game.model.Room;
 import com.gentooway.game.model.World;
 
@@ -39,6 +40,7 @@ public class WorldLoader {
         Room upRoom = new Room();
         upRoom.setDown(room);
         upRoom.setWelcomeMessage("Now you are in the up room");
+        upRoom.getCreatures().add(new Creature());
         rooms.add(upRoom);
 
         Room downRoom = new Room();

@@ -1,6 +1,8 @@
 package com.gentooway.game.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class for a world room.
@@ -13,6 +15,8 @@ public class Room implements Serializable {
     private Room down;
     private Room left;
     private Room right;
+
+    private List<Creature> creatures = new ArrayList<>();
 
     public Room getUp() {
         return up;
@@ -60,5 +64,13 @@ public class Room implements Serializable {
 
     public void setWelcomeMessage(String welcomeMessage) {
         this.welcomeMessage = welcomeMessage;
+    }
+
+    public List<Creature> getCreatures() {
+        return creatures;
+    }
+
+    public void setCreatures(List<Creature> creatures) {
+        this.creatures = creatures;
     }
 }

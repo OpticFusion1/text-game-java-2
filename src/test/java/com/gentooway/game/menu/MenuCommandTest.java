@@ -24,10 +24,37 @@ class MenuCommandTest {
     }
 
     @Test
-    void shouldReturnListOfStateDependentMenuCommands() {
+    void shouldReturnListOfStartMenuMenuCommands() {
         // given
         WorldState state = WorldState.START_MENU;
         List<MenuCommand> expectedStates = Arrays.asList(HELP, NEW_GAME, LOAD, EXIT);
+
+        // when
+        List<MenuCommand> commands = MenuCommand.valuesForState(state);
+
+        // then
+        assertThat(commands, is(expectedStates));
+    }
+
+    @Test
+    void shouldReturnListOfInGameMenuCommands() {
+        // given
+        WorldState state = WorldState.IN_GAME;
+        List<MenuCommand> expectedStates =
+                Arrays.asList(HELP, STATS, MOVE_UP, MOVE_DOWN, MOVE_RIGHT, MOVE_LEFT, SAVE, LOAD, EXIT);
+
+        // when
+        List<MenuCommand> commands = MenuCommand.valuesForState(state);
+
+        // then
+        assertThat(commands, is(expectedStates));
+    }
+
+    @Test
+    void shouldReturnListOfBattleMenuCommands() {
+        // given
+        WorldState state = WorldState.BATTLE;
+        List<MenuCommand> expectedStates = Arrays.asList(HELP, STATS, USE_POTION, ATTACK, SAVE, EXIT);
 
         // when
         List<MenuCommand> commands = MenuCommand.valuesForState(state);

@@ -40,7 +40,11 @@ public class WorldLoader {
         Room upRoom = new Room();
         upRoom.setDown(room);
         upRoom.setWelcomeMessage("Now you are in the up room");
-        upRoom.getCreatures().add(new Creature());
+        Creature creature = new Creature();
+        creature.setName("test");
+        creature.setHealth(30);
+        creature.setAttack(10);
+        upRoom.getCreatures().add(creature);
         rooms.add(upRoom);
 
         Room downRoom = new Room();

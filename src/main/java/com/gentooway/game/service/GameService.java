@@ -1,17 +1,20 @@
 package com.gentooway.game.service;
 
 import com.gentooway.game.model.Character;
+import com.gentooway.game.model.Creature;
 import com.gentooway.game.model.Room;
 import com.gentooway.game.model.World;
 import com.gentooway.game.model.enums.UserActionType;
+import com.gentooway.game.model.enums.WorldState;
 
 import java.io.*;
 import java.util.List;
 
-import static com.gentooway.game.model.enums.UserActionType.MOVE;
-import static com.gentooway.game.model.enums.WorldState.IN_GAME;
+import static com.gentooway.game.model.enums.UserActionType.*;
+import static com.gentooway.game.model.enums.WorldState.*;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Service for game to world interactions.
@@ -91,8 +94,11 @@ public class GameService {
     private void setCurrentRoomOrWriteErrorMessage(Character character, Room room) {
         if (nonNull(room)) {
             character.setCurrentRoom(room);
-            gainExperience(MOVE);
             System.out.println(room.getWelcomeMessage());
+
+            gainExperience(MOVE);
+            checkCreatures();
+
         } else {
             System.out.println("You cannot go this way! There is no door!");
         }
@@ -172,6 +178,70 @@ public class GameService {
 
             System.out.println("Congratulations! You have reached the " + newLevel + " level!");
         }
+    }
+
+    private void checkCreatures() {
+        List<Creature> aliveCreatures = getAliveCreatures();
+
+        WorldState worldState = world.getState();
+        if (!aliveCreatures.isEmpty() && worldState.equals(IN_GAME)) {
+            System.out.println("You have faced " + aliveCreatures.size() + " creatures! Get ready for the battle!");
+
+            world.setState(BATTLE);
+        } else if (aliveCreatures.isEmpty() && worldState.equals(BATTLE)) {
+            System.out.println("You have killed all the creatures in this room!");
+
+            world.setState(IN_GAME);
+        }
+    }
+
+    public void attackCreature() {
+        List<Creature> aliveCreatures = getAliveCreatures();
+
+        Character character = world.getCharacter();
+        Creature creature = aliveCreatures.get(0);
+        System.out.println("Attacking \"" + creature.getName() + "\" creature.");
+        System.out.println(creature);
+
+        Integer characterAttack = character.getAttack();
+        Integer creatureNewHealth = creature.getHealth() - characterAttack;
+        creature.setHealth(creatureNewHealth);
+        System.out.println("You have damaged the creature for " + character.getAttack());
+
+        Integer creatureAttack = creature.getAttack();
+        Integer characterNewHealth = character.getHealth() - creatureAttack;
+        character.setHealth(characterNewHealth);
+        System.out.println("You have got " + creatureAttack + " damage");
+
+        checkCharacterHealth(character);
+        checkCreatureHealth(creature);
+
+        checkCreatures();
+    }
+
+    private void checkCreatureHealth(Creature creature) {
+        if (creature.getHealth() <= 0) {
+            System.out.println("You have killed \"" + creature.getName() + "\" creature!");
+            creature.setAlive(false);
+            gainExperience(creature.isBoss() ? BOSS_KILL : CREATURE_KILL);
+        }
+    }
+
+    private void checkCharacterHealth(Character character) {
+        if (character.getHealth() <= 0) {
+            System.out.println("You have died! Load last save or start a new game.");
+            world.setState(START_MENU);
+        }
+    }
+
+    public void usePotion() {
+        // todo
+    }
+
+    private List<Creature> getAliveCreatures() {
+        return world.getCharacter().getCurrentRoom().getCreatures().stream()
+                .filter(Creature::isAlive)
+                .collect(toList());
     }
 
     World getWorld() {

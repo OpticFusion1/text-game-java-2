@@ -5,6 +5,7 @@ package com.gentooway.game.model;
  */
 public class Creature {
 
+    private String name;
     private Integer health;
     private Integer attack;
     private boolean isAlive = true;
@@ -40,5 +41,22 @@ public class Creature {
 
     public void setBoss(boolean boss) {
         isBoss = boss;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Creature stats: " +
+                "\nname='" + name + '\'' +
+                "\nhealth=" + health +
+                "\nattack=" + attack +
+                "\nisBoss=" + isBoss;
     }
 }

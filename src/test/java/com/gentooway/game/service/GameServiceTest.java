@@ -1,6 +1,7 @@
 package com.gentooway.game.service;
 
 import com.gentooway.game.model.Character;
+import com.gentooway.game.model.Creature;
 import com.gentooway.game.model.Room;
 import com.gentooway.game.model.World;
 import com.gentooway.game.model.enums.WorldState;
@@ -13,6 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.nio.file.Paths;
 
+import static com.gentooway.game.model.enums.UserActionType.CREATURE_KILL;
+import static com.gentooway.game.model.enums.WorldState.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -70,6 +73,7 @@ class GameServiceTest {
         Character character = new Character();
         character.setCurrentRoom(currentRoom);
         when(world.getCharacter()).thenReturn(character);
+        when(world.getState()).thenReturn(IN_GAME);
 
         // when
         gameService.moveUp();
@@ -93,6 +97,7 @@ class GameServiceTest {
         Character character = new Character();
         character.setCurrentRoom(currentRoom);
         when(world.getCharacter()).thenReturn(character);
+        when(world.getState()).thenReturn(IN_GAME);
 
         // when
         gameService.moveDown();
@@ -116,6 +121,7 @@ class GameServiceTest {
         Character character = new Character();
         character.setCurrentRoom(currentRoom);
         when(world.getCharacter()).thenReturn(character);
+        when(world.getState()).thenReturn(IN_GAME);
 
         // when
         gameService.moveLeft();
@@ -139,6 +145,7 @@ class GameServiceTest {
         Character character = new Character();
         character.setCurrentRoom(currentRoom);
         when(world.getCharacter()).thenReturn(character);
+        when(world.getState()).thenReturn(IN_GAME);
 
         // when
         gameService.moveRight();
@@ -225,11 +232,104 @@ class GameServiceTest {
         character.setExperience(99);
         character.setCurrentRoom(currentRoom);
         when(world.getCharacter()).thenReturn(character);
+        when(world.getState()).thenReturn(IN_GAME);
 
         // when
         gameService.moveUp();
 
         // then
         assertThat(character.getLevel(), is(5));
+    }
+
+    @Test
+    void shouldSetTheBattleWorldState() {
+        // given
+        Room currentRoom = new Room();
+        Room up = new Room();
+        up.getCreatures().add(new Creature());
+        currentRoom.setUp(up);
+
+        Character character = new Character();
+        character.setCurrentRoom(currentRoom);
+        when(world.getCharacter()).thenReturn(character);
+        when(world.getState()).thenReturn(IN_GAME);
+
+        // when
+        gameService.moveUp();
+
+        // then
+        verify(world).setState(BATTLE);
+    }
+
+    @Test
+    void shouldSetMenuWorldStateIfCharacterHaveDied() {
+        // given
+        Room currentRoom = new Room();
+        Creature creature = new Creature();
+        creature.setName("test");
+        creature.setHealth(100);
+        creature.setAttack(100);
+        currentRoom.getCreatures().add(creature);
+
+        Character character = new Character();
+        character.setCurrentRoom(currentRoom);
+        when(world.getCharacter()).thenReturn(character);
+        when(world.getState()).thenReturn(BATTLE);
+
+        // when
+        gameService.attackCreature();
+
+        // then
+        verify(world).setState(START_MENU);
+
+        assertThat(character.getHealth(), is(0));
+    }
+
+    @Test
+    void shouldAttackCreature() {
+        // given
+        Room currentRoom = new Room();
+        Creature creature = new Creature();
+        creature.setName("test123");
+        creature.setHealth(100);
+        creature.setAttack(50);
+        currentRoom.getCreatures().add(creature);
+
+        Character character = new Character();
+        character.setCurrentRoom(currentRoom);
+        when(world.getCharacter()).thenReturn(character);
+        when(world.getState()).thenReturn(BATTLE);
+
+        // when
+        gameService.attackCreature();
+
+        // then
+        assertThat(character.getHealth(), is(50));
+        assertThat(creature.getHealth(), is(90));
+    }
+
+    @Test
+    void shouldKillCreatureAndGainExperience() {
+        // given
+        Room currentRoom = new Room();
+        Creature creature = new Creature();
+        creature.setName("test123");
+        creature.setHealth(10);
+        creature.setAttack(50);
+        currentRoom.getCreatures().add(creature);
+
+        Character character = new Character();
+        character.setCurrentRoom(currentRoom);
+        when(world.getCharacter()).thenReturn(character);
+        when(world.getState()).thenReturn(BATTLE);
+
+        // when
+        gameService.attackCreature();
+
+        // then
+        assertThat(character.getHealth(), is(50));
+        assertThat(character.getExperience(), is(CREATURE_KILL.getExp()));
+        assertThat(creature.getHealth(), is(0));
+        assertThat(creature.isAlive(), is(false));
     }
 }

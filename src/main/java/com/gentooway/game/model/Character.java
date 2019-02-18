@@ -10,6 +10,7 @@ public class Character implements Serializable {
     private Integer health = 100;
     private Integer level = 1;
     private Integer experience = 0;
+    private Integer attack = 10;
     private Room currentRoom;
 
     public Integer getHealth() {
@@ -44,11 +45,20 @@ public class Character implements Serializable {
         this.currentRoom = currentRoom;
     }
 
+    public Integer getAttack() {
+        return attack;
+    }
+
+    public void setAttack(Integer attack) {
+        this.attack = attack;
+    }
+
     @Override
     public String toString() {
         return "Character info: " +
                 "\nhealth = " + health +
                 "\nlevel = " + level +
-                "\nexperience = " + experience;
+                "\nexperience = " + experience +
+                "\nattack " + attack;
     }
 }

@@ -5,7 +5,7 @@ package com.gentooway.game.model.enums;
  */
 public enum UserActionType {
     MOVE(1),
-    MOB_KILL(3),
+    CREATURE_KILL(3),
     BOSS_KILL(10);
 
     Integer exp;

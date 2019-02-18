@@ -27,7 +27,7 @@ public class WorldLoader {
         rooms.add(room);
 
         Room leftRoom = new Room();
-        leftRoom.setRight(room);
+        leftRoom.setLeft(room);
         leftRoom.setWelcomeMessage("Now you are in the left room");
         rooms.add(leftRoom);
 

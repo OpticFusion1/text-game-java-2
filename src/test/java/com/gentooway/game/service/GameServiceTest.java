@@ -76,6 +76,7 @@ class GameServiceTest {
 
         // then
         assertThat(character.getCurrentRoom(), is(upRoom));
+        assertThat(character.getExperience(), is(1));
     }
 
     @Test
@@ -98,6 +99,7 @@ class GameServiceTest {
 
         // then
         assertThat(character.getCurrentRoom(), is(downRoom));
+        assertThat(character.getExperience(), is(1));
     }
 
     @Test
@@ -120,6 +122,7 @@ class GameServiceTest {
 
         // then
         assertThat(character.getCurrentRoom(), is(leftRoom));
+        assertThat(character.getExperience(), is(1));
     }
 
     @Test
@@ -142,6 +145,7 @@ class GameServiceTest {
 
         // then
         assertThat(character.getCurrentRoom(), is(rightRoom));
+        assertThat(character.getExperience(), is(1));
     }
 
     @Test
@@ -159,6 +163,7 @@ class GameServiceTest {
 
         // then
         assertThat(character.getCurrentRoom(), is(currentRoom));
+        assertThat(character.getExperience(), is(0));
     }
 
     @Test
@@ -207,5 +212,24 @@ class GameServiceTest {
 
         // when
         gameService.showStats();
+    }
+
+    @Test
+    void shouldReachANewLevelWhileMovingUp() {
+        // given
+        Room currentRoom = new Room();
+        currentRoom.setUp(new Room());
+
+        Character character = new Character();
+        character.setLevel(4);
+        character.setExperience(99);
+        character.setCurrentRoom(currentRoom);
+        when(world.getCharacter()).thenReturn(character);
+
+        // when
+        gameService.moveUp();
+
+        // then
+        assertThat(character.getLevel(), is(5));
     }
 }

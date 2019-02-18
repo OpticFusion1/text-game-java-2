@@ -3,10 +3,12 @@ package com.gentooway.game.service;
 import com.gentooway.game.model.Character;
 import com.gentooway.game.model.Room;
 import com.gentooway.game.model.World;
+import com.gentooway.game.model.enums.UserActionType;
 
 import java.io.*;
 import java.util.List;
 
+import static com.gentooway.game.model.enums.UserActionType.MOVE;
 import static com.gentooway.game.model.enums.WorldState.IN_GAME;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -89,6 +91,7 @@ public class GameService {
     private void setCurrentRoomOrWriteErrorMessage(Character character, Room room) {
         if (nonNull(room)) {
             character.setCurrentRoom(room);
+            gainExperience(MOVE);
             System.out.println(room.getWelcomeMessage());
         } else {
             System.out.println("You cannot go this way! There is no door!");
@@ -134,6 +137,41 @@ public class GameService {
      */
     public void showStats() {
         System.out.println(world.getCharacter());
+    }
+
+    /**
+     * Gain experience depending on the action type and check if new level reached.
+     *
+     * @param actionType type of action
+     */
+    private void gainExperience(UserActionType actionType) {
+        Character character = world.getCharacter();
+
+        int newExperience = character.getExperience() + actionType.getExp();
+        character.setExperience(newExperience);
+
+        checkLevelUpdate();
+    }
+
+    /**
+     * Check if a new level reaced.
+     * <p>
+     * Formula:
+     * <p>
+     * currentExperience >= 10 * currentLevel + (10 * (currentLevel - 1))
+     */
+    private void checkLevelUpdate() {
+        Character character = world.getCharacter();
+
+        Integer experience = character.getExperience();
+        Integer experienceToTheNextLevel = 10 * character.getLevel() + (10 * (character.getLevel() - 1));
+
+        if (experience >= experienceToTheNextLevel) {
+            Integer newLevel = character.getLevel() + 1;
+            character.setLevel(newLevel);
+
+            System.out.println("Congratulations! You have reached the " + newLevel + " level!");
+        }
     }
 
     World getWorld() {

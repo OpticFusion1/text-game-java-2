@@ -138,7 +138,7 @@ public class GameService {
     }
 
     /**
-     * Print a character stats.
+     * Print character stats.
      */
     public void showStats() {
         System.out.println(world.getCharacter());
@@ -159,7 +159,7 @@ public class GameService {
     }
 
     /**
-     * Check if a new level reaced.
+     * Check if a new level reached.
      * <p>
      * Formula:
      * <p>
@@ -177,6 +177,7 @@ public class GameService {
 
             character.setHealth(character.getHealth() + 30);
             character.setAttack(character.getAttack() + 10);
+            character.setPotionCharges(character.getPotionCharges() + 1);
 
             System.out.println("Congratulations! You have reached the " + newLevel + " level!");
         }
@@ -255,8 +256,21 @@ public class GameService {
         }
     }
 
+    /**
+     * Uses potion to increase character health by 100.
+     */
     public void usePotion() {
-        // todo
+        Character character = world.getCharacter();
+        Integer potionCharges = character.getPotionCharges();
+
+        if (potionCharges > 0) {
+            character.setHealth(character.getHealth() + 100);
+            character.setPotionCharges(character.getPotionCharges() - 1);
+
+            System.out.println("One charge of potion has been used! Now you have " + character.getHealth() + " health.");
+        } else {
+            System.out.println("You have no potion charges left!");
+        }
     }
 
     private List<Creature> getAliveCreatures() {

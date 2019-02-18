@@ -28,12 +28,12 @@ public class WorldLoader {
         rooms.add(room);
 
         Room leftRoom = new Room();
-        leftRoom.setLeft(room);
+        leftRoom.setRight(room);
         leftRoom.setWelcomeMessage("Now you are in the left room");
         rooms.add(leftRoom);
 
         Room rightRoom = new Room();
-        rightRoom.setRight(room);
+        rightRoom.setLeft(room);
         rightRoom.setWelcomeMessage("Now you are in the right room");
         rooms.add(rightRoom);
 

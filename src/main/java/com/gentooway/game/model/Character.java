@@ -11,6 +11,7 @@ public class Character implements Serializable {
     private Integer level = 1;
     private Integer experience = 0;
     private Integer attack = 10;
+    private Integer potionCharges = 10;
     private Room currentRoom;
 
     public Integer getHealth() {
@@ -53,12 +54,21 @@ public class Character implements Serializable {
         this.attack = attack;
     }
 
+    public Integer getPotionCharges() {
+        return potionCharges;
+    }
+
+    public void setPotionCharges(Integer potionCharges) {
+        this.potionCharges = potionCharges;
+    }
+
     @Override
     public String toString() {
         return "Character info: " +
                 "\nhealth = " + health +
                 "\nlevel = " + level +
                 "\nexperience = " + experience +
-                "\nattack " + attack;
+                "\nattack " + attack +
+                "\npotion charges = " + potionCharges;
     }
 }

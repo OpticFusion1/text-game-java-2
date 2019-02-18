@@ -241,6 +241,7 @@ class GameServiceTest {
         assertThat(character.getLevel(), is(5));
         assertThat(character.getAttack(), is(20));
         assertThat(character.getHealth(), is(130));
+        assertThat(character.getPotionCharges(), is(10));
     }
 
     @Test
@@ -333,5 +334,32 @@ class GameServiceTest {
         assertThat(character.getExperience(), is(CREATURE_KILL.getExp()));
         assertThat(creature.getHealth(), is(0));
         assertThat(creature.isAlive(), is(false));
+    }
+
+    @Test
+    void shouldUsePotionAndDecreasedPotionCharges() {
+        // given
+        Character character = new Character();
+        when(world.getCharacter()).thenReturn(character);
+
+        // when
+        gameService.usePotion();
+
+        // then
+        assertThat(character.getPotionCharges(), is(9));
+    }
+
+    @Test
+    void shouldBeOkWhenUsingPotionWithZeroCharges() {
+        // given
+        Character character = new Character();
+        character.setPotionCharges(0);
+        when(world.getCharacter()).thenReturn(character);
+
+        // when
+        gameService.usePotion();
+
+        // then
+        assertThat(character.getPotionCharges(), is(0));
     }
 }

@@ -1,9 +1,11 @@
 package com.gentooway.game.model;
 
+import java.io.Serializable;
+
 /**
  * Class for a game creature.
  */
-public class Creature {
+public class Creature implements Serializable {
 
     private String name;
     private Integer health;

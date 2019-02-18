@@ -67,8 +67,8 @@ public class Game {
     }
 
     private void printMenu() {
-        for (MenuCommand commands : valuesForState(world.getState())) {
-            System.out.println(commands.getValue());
+        for (MenuCommand command : valuesForState(world.getState())) {
+            System.out.println(command.getValue());
         }
     }
 }

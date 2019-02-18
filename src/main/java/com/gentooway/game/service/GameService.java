@@ -98,7 +98,6 @@ public class GameService {
 
             gainExperience(MOVE);
             checkCreatures();
-
         } else {
             System.out.println("You cannot go this way! There is no door!");
         }
@@ -176,16 +175,25 @@ public class GameService {
             Integer newLevel = character.getLevel() + 1;
             character.setLevel(newLevel);
 
+            character.setHealth(character.getHealth() + 30);
+            character.setAttack(character.getAttack() + 10);
+
             System.out.println("Congratulations! You have reached the " + newLevel + " level!");
         }
     }
 
+    /**
+     * Checks whether the current room has alive creatures and begins the new battle if they exist.
+     * If the current world state is IN_GAME and alice creatures exist, sets the state to BATTLE.
+     * If the current world state is BATTLE and there are no more alive creatures, sets the state to IN_GAME.
+     */
     private void checkCreatures() {
         List<Creature> aliveCreatures = getAliveCreatures();
 
         WorldState worldState = world.getState();
         if (!aliveCreatures.isEmpty() && worldState.equals(IN_GAME)) {
-            System.out.println("You have faced " + aliveCreatures.size() + " creatures! Get ready for the battle!");
+            System.out.println("You have faced creatures in this room! Get ready for the battle!");
+            System.out.println("Number of creatures: " + aliveCreatures.size());
 
             world.setState(BATTLE);
         } else if (aliveCreatures.isEmpty() && worldState.equals(BATTLE)) {
@@ -195,6 +203,9 @@ public class GameService {
         }
     }
 
+    /**
+     * Attack an alive creature.
+     */
     public void attackCreature() {
         List<Creature> aliveCreatures = getAliveCreatures();
 
@@ -219,6 +230,11 @@ public class GameService {
         checkCreatures();
     }
 
+    /**
+     * Checks if a creature has more than zero health.
+     *
+     * @param creature the creature to check
+     */
     private void checkCreatureHealth(Creature creature) {
         if (creature.getHealth() <= 0) {
             System.out.println("You have killed \"" + creature.getName() + "\" creature!");
@@ -227,6 +243,11 @@ public class GameService {
         }
     }
 
+    /**
+     * Check if a character has more than zero health.
+     *
+     * @param character the character
+     */
     private void checkCharacterHealth(Character character) {
         if (character.getHealth() <= 0) {
             System.out.println("You have died! Load last save or start a new game.");

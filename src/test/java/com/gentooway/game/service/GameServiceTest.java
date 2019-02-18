@@ -239,6 +239,8 @@ class GameServiceTest {
 
         // then
         assertThat(character.getLevel(), is(5));
+        assertThat(character.getAttack(), is(20));
+        assertThat(character.getHealth(), is(130));
     }
 
     @Test

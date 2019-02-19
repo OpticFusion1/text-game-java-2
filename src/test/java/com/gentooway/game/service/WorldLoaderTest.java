@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static com.gentooway.game.service.WorldLoader.CONFIG_FILENAME;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -14,9 +15,23 @@ class WorldLoaderTest {
     @Test
     void shouldLoadWorldFromTestConfig() {
         // when
-        World world = WorldLoader.loadWorld();
+        World world = WorldLoader.loadWorld(new String[]{});
 
         // then
+        assertWorldCorrectness(world);
+    }
+
+    @Test
+    void shouldLoadWorldFromCustomTestConfig() {
+        // when
+        String filePath = WorldLoaderTest.class.getResource(CONFIG_FILENAME).getPath();
+        World world = WorldLoader.loadWorld(new String[]{filePath});
+
+        // then
+        assertWorldCorrectness(world);
+    }
+
+    private void assertWorldCorrectness(World world) {
         List<Room> rooms = world.getRooms();
         assertThat(rooms.size(), is(5));
 

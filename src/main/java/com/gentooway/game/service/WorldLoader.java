@@ -4,10 +4,7 @@ import com.gentooway.game.model.Creature;
 import com.gentooway.game.model.Room;
 import com.gentooway.game.model.World;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +15,12 @@ import java.util.List;
  */
 public class WorldLoader {
 
+    static final String CONFIG_FILENAME = "/config.xml";
+
     private static final String ID_TAG = "<id>";
     private static final String ID_CLOSE_TAG = "</id>";
     private static final String MESSAGE_TAG = "<message>";
     private static final String MESSAGE_CLOSE_TAG = "</message>";
-    private static final String CONFIG_FILENAME = "/config.xml";
     private static final String ROOM_TAG = "<room>";
     private static final String ROOM_CLOSE_TAG = "</room>";
     private static final String UP_TAG = "<up>";
@@ -45,17 +43,17 @@ public class WorldLoader {
     private static final String IS_BOSS_TAG = "<isBoss>";
     private static final String IS_BOSS_CLOSE_TAG = "</isBoss>";
 
-    public static World loadWorld() {
+    public static World loadWorld(String[] args) {
         World world = new World();
 
-        world.setRooms(getRoomsFromFile());
+        world.setRooms(getRoomsFromFile(args));
         return world;
     }
 
-    private static List<Room> getRoomsFromFile() {
+    private static List<Room> getRoomsFromFile(String[] args) {
         List<Room> rooms = new ArrayList<>();
 
-        List<String> lines = readFileLines();
+        List<String> lines = readFileLines(args);
 
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
@@ -75,10 +73,18 @@ public class WorldLoader {
         return rooms;
     }
 
-    private static List<String> readFileLines() {
+    private static List<String> readFileLines(String[] args) {
+
+        String fileName = CONFIG_FILENAME;
+        if (args.length > 0) {
+            fileName = args[0];
+        }
+
         List<String> fileLines = new ArrayList<>();
 
-        try (InputStream inputStream = WorldLoader.class.getResourceAsStream(CONFIG_FILENAME);
+        try (InputStream inputStream = args.length > 0
+                ? new FileInputStream(fileName)
+                : WorldLoader.class.getResourceAsStream(fileName);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
 
             String line;

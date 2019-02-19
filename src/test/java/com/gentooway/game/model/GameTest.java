@@ -19,8 +19,11 @@ class GameTest {
     @Mock
     private Scanner scanner;
 
+    @Mock
+    private World world;
+
     @InjectMocks
-    private Game game;
+    private Game game = new Game(world);
 
     @Test
     void shouldStartGameHandleInputAndCloseResourceAfterExit() {

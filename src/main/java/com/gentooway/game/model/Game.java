@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 import static com.gentooway.game.menu.MenuCommand.*;
-import static com.gentooway.game.service.WorldLoader.loadWorld;
 
 /**
  * Main class of the game.
@@ -21,8 +20,8 @@ public class Game {
 
     private Map<MenuCommand, Runnable> commandToHandler = new EnumMap<>(MenuCommand.class);
 
-    public Game() {
-        this.world = loadWorld();
+    public Game(World world) {
+        this.world = world;
         this.gameService = new GameService(world);
         this.scanner = new Scanner(System.in);
 
@@ -44,7 +43,6 @@ public class Game {
     }
 
     public void start() {
-        // todo printGameIntro()
         printMenu();
 
         String command = scanner.nextLine();

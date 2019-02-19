@@ -4,10 +4,10 @@ import com.gentooway.game.model.Creature;
 import com.gentooway.game.model.Room;
 import com.gentooway.game.model.World;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class WorldLoader {
     private static final String ID_CLOSE_TAG = "</id>";
     private static final String MESSAGE_TAG = "<message>";
     private static final String MESSAGE_CLOSE_TAG = "</message>";
-    private static final String CONFIG_FILENAME = "config.xml";
+    private static final String CONFIG_FILENAME = "/config.xml";
     private static final String ROOM_TAG = "<room>";
     private static final String ROOM_CLOSE_TAG = "</room>";
     private static final String UP_TAG = "<up>";
@@ -55,32 +55,43 @@ public class WorldLoader {
     private static List<Room> getRoomsFromFile() {
         List<Room> rooms = new ArrayList<>();
 
-        try {
-            List<String> lines = Files.readAllLines(
-                    Paths.get(WorldLoader.class.getClassLoader()
-                            .getResource(CONFIG_FILENAME).toURI()));
+        List<String> lines = readFileLines();
 
-            for (int i = 0; i < lines.size(); i++) {
-                String line = lines.get(i);
-                if (line.contains(ROOM_TAG)) {
-                    Room room = parseRoomData(lines, i);
-                    rooms.add(room);
-                }
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            if (line.contains(ROOM_TAG)) {
+                Room room = parseRoomData(lines, i);
+                rooms.add(room);
+            }
+        }
+
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            if (line.contains(ROOM_TAG)) {
+                fillRoomsRelations(rooms, lines, i);
+            }
+        }
+
+        return rooms;
+    }
+
+    private static List<String> readFileLines() {
+        List<String> fileLines = new ArrayList<>();
+
+        try (InputStream inputStream = WorldLoader.class.getResourceAsStream(CONFIG_FILENAME);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                fileLines.add(line);
             }
 
-            for (int i = 0; i < lines.size(); i++) {
-                String line = lines.get(i);
-                if (line.contains(ROOM_TAG)) {
-                    fillRoomsRelations(rooms, lines, i);
-                }
-            }
-
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             System.out.println("Error while getting a game config");
             e.printStackTrace();
         }
 
-        return rooms;
+        return fileLines;
     }
 
     private static void fillRoomsRelations(List<Room> rooms, List<String> lines, int i) {

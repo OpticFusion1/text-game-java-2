@@ -43,7 +43,7 @@ If you want to create your own world, you can use pretty simple xml template. Th
 
 A simple 5 rooms example:
 
-```
+``` xml
 <rooms>
      <room>
          <id>1</id>

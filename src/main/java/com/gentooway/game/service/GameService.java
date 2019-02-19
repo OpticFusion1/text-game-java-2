@@ -10,6 +10,7 @@ import com.gentooway.game.model.enums.WorldState;
 import java.io.*;
 import java.util.List;
 
+import static com.gentooway.game.model.constants.ConsoleMessages.*;
 import static com.gentooway.game.model.enums.UserActionType.*;
 import static com.gentooway.game.model.enums.WorldState.*;
 import static java.util.Objects.isNull;
@@ -44,7 +45,7 @@ public class GameService {
 
         world.setState(IN_GAME);
 
-        System.out.println("New character was created! Welcome to the game!");
+        System.out.println(NEW_CHARACTER_CREATED);
     }
 
     /**
@@ -99,7 +100,7 @@ public class GameService {
             gainExperience(MOVE);
             checkCreatures();
         } else {
-            System.out.println("You cannot go this way! There is no door!");
+            System.out.println(THERE_IS_NO_WAY);
         }
     }
 
@@ -112,10 +113,10 @@ public class GameService {
 
             out.writeObject(world);
 
-            System.out.println("Game has been saved!");
+            System.out.println(GAME_HAS_BEEN_SAVED);
 
         } catch (IOException e) {
-            System.out.println("Got an error while saving the world state");
+            System.out.println(SAVING_ERROR);
             e.printStackTrace();
         }
     }
@@ -129,10 +130,10 @@ public class GameService {
 
             this.world = (World) in.readObject();
 
-            System.out.println("Game has been loaded!");
+            System.out.println(GAME_HAS_BEEN_LOADED);
 
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Got an error while loading the world state");
+            System.out.println(LOADING_ERROR);
             e.printStackTrace();
         }
     }
@@ -193,12 +194,12 @@ public class GameService {
 
         WorldState worldState = world.getState();
         if (!aliveCreatures.isEmpty() && worldState.equals(IN_GAME)) {
-            System.out.println("You have faced creatures in this room! Get ready for the battle!");
+            System.out.println(CREATURES_MESSAGE);
             System.out.println("Number of creatures: " + aliveCreatures.size());
 
             world.setState(BATTLE);
         } else if (aliveCreatures.isEmpty() && worldState.equals(BATTLE)) {
-            System.out.println("You have killed all the creatures in this room!");
+            System.out.println(CREATURES_KILLED);
 
             world.setState(IN_GAME);
         }
@@ -253,7 +254,7 @@ public class GameService {
      */
     private void checkCharacterHealth(Character character) {
         if (character.getHealth() <= 0) {
-            System.out.println("You have died! Load last save or start a new game.");
+            System.out.println(YOU_HAVE_DIED);
             world.setState(START_MENU);
         }
     }
@@ -271,7 +272,7 @@ public class GameService {
 
             System.out.println("One charge of potion has been used! Now you have " + character.getHealth() + " health.");
         } else {
-            System.out.println("You have no potion charges left!");
+            System.out.println(NO_POTION_CHARGES_LEFT);
         }
     }
 

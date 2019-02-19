@@ -8,6 +8,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gentooway.game.model.constants.ConsoleMessages.CONFIG_LOAD_ERROR;
+import static com.gentooway.game.model.constants.WorldXmlTags.*;
+
 /**
  * World state loader.
  * <p>
@@ -16,32 +19,6 @@ import java.util.List;
 public class WorldLoader {
 
     static final String CONFIG_FILENAME = "/config.xml";
-
-    private static final String ID_TAG = "<id>";
-    private static final String ID_CLOSE_TAG = "</id>";
-    private static final String MESSAGE_TAG = "<message>";
-    private static final String MESSAGE_CLOSE_TAG = "</message>";
-    private static final String ROOM_TAG = "<room>";
-    private static final String ROOM_CLOSE_TAG = "</room>";
-    private static final String UP_TAG = "<up>";
-    private static final String UP_CLOSE_TAG = "</up>";
-    private static final String DOWN_TAG = "<down>";
-    private static final String DOWN_CLOSE_TAG = "</down>";
-    private static final String LEFT_TAG = "<left>";
-    private static final String LEFT_CLOSE_TAG = "</left>";
-    private static final String RIGHT_TAG = "<right>";
-    private static final String RIGHT_CLOSE_TAG = "</right>";
-    private static final String CREATURES_TAG = "<creatures>";
-    private static final String CREATURES_CLOSE_TAG = "</creatures>";
-    private static final String CREATURE_TAG = "<creature>";
-    private static final String NAME_TAG = "<name>";
-    private static final String NAME_CLOSE_TAG = "</name>";
-    private static final String HEALTH_TAG = "<health>";
-    private static final String HEALTH_CLOSE_TAG = "</health>";
-    private static final String ATTACK_TAG = "<attack>";
-    private static final String ATTACK_CLOSE_TAG = "</attack>";
-    private static final String IS_BOSS_TAG = "<isBoss>";
-    private static final String IS_BOSS_CLOSE_TAG = "</isBoss>";
 
     public static World loadWorld(String[] args) {
         World world = new World();
@@ -93,7 +70,7 @@ public class WorldLoader {
             }
 
         } catch (IOException e) {
-            System.out.println("Error while getting a game config");
+            System.out.println(CONFIG_LOAD_ERROR);
             e.printStackTrace();
         }
 

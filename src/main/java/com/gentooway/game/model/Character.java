@@ -2,16 +2,18 @@ package com.gentooway.game.model;
 
 import java.io.Serializable;
 
+import static com.gentooway.game.model.constants.CharacterDefaultStats.*;
+
 /**
  * Class for a character.
  */
 public class Character implements Serializable {
 
-    private Integer health = 100;
-    private Integer level = 1;
-    private Integer experience = 0;
-    private Integer attack = 10;
-    private Integer potionCharges = 10;
+    private Integer health = DEFAULT_HEALTH;
+    private Integer level = DEFAULT_LEVEL;
+    private Integer experience = DEFAULT_EXPERIENCE;
+    private Integer attack = DEFAULT_ATTACK;
+    private Integer potionCharges = DEFAULT_POTION_CHARGES;
     private Room currentRoom;
 
     public Integer getHealth() {

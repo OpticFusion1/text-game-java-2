@@ -38,7 +38,7 @@ If you want to create your own world, you can use pretty simple xml template. Th
 * Each room should have a unique id
 * Properties order is very important, look at an example below
 * To create rooms relationship (possibility to move from one to another), put a room id into *left, right, top* or *up* property
-* The *left, right, top*, and *up* property order is not important
+* The *left, right, top*, and *up* properties order is not important
 
 
 A simple 5 rooms example:
@@ -100,6 +100,6 @@ A simple 5 rooms example:
 
 # Possible improvements
 * Draw a world map with current character position
-* Make menu commands truly related to the world state
+* Make menu commands truly related to the world state (for instance, now you could use move while in the battle state)
 * Colorize console output
 * Implement more game mechanics, for instance, classes, abilities, weapons, inventory, loot, money, stores, achievements, etc.

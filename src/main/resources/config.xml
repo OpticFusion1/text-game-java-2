@@ -1,0 +1,154 @@
+<rooms>
+    <room>
+        <id>1</id>
+        <message>1 room</message>
+        <left>2</left>
+        <right>16</right>
+        <down>11</down>
+    </room>
+    <room>
+        <id>2</id>
+        <message>2 room</message>
+        <down>3</down>
+        <right>1</right>
+    </room>
+    <room>
+        <id>3</id>
+        <message>3 room</message>
+        <down>4</down>
+        <up>2</up>
+    </room>
+    <room>
+        <id>4</id>
+        <message>4 room</message>
+        <down>5</down>
+        <up>3</up>
+    </room>
+    <room>
+        <id>5</id>
+        <message>5 room</message>
+        <down>6</down>
+        <up>4</up>
+    </room>
+    <room>
+        <id>6</id>
+        <message>6 room</message>
+        <right>7</right>
+        <up>5</up>
+    </room>
+    <room>
+        <id>7</id>
+        <message>7 room</message>
+        <down>8</down>
+        <left>6</left>
+    </room>
+    <room>
+        <id>8</id>
+        <message>8 room</message>
+        <right>9</right>
+        <up>7</up>
+    </room>
+    <room>
+        <id>9</id>
+        <message>9 room</message>
+        <down>10</down>
+        <up>15</up>
+        <right>25</right>
+        <left>8</left>
+    </room>
+    <room>
+        <id>10</id>
+        <message>10 room</message>
+        <up>9</up>
+    </room>
+    <room>
+        <id>11</id>
+        <message>11 room</message>
+        <up>1</up>
+        <down>12</down>
+    </room>
+    <room>
+        <id>12</id>
+        <message>12 room</message>
+        <right>13</right>
+        <up>11</up>
+    </room>
+    <room>
+        <id>13</id>
+        <message>13 room</message>
+        <up>14</up>
+        <down>15</down>
+        <left>12</left>
+    </room>
+    <room>
+        <id>14</id>
+        <message>14 room</message>
+        <down>13</down>
+    </room>
+    <room>
+        <id>15</id>
+        <message>15 room</message>
+        <down>9</down>
+        <up>13</up>
+    </room>
+    <room>
+        <id>16</id>
+        <message>16 room</message>
+        <right>17</right>
+        <left>1</left>
+    </room>
+    <room>
+        <id>17</id>
+        <message>17 room</message>
+        <down>18</down>
+        <left>16</left>
+    </room>
+    <room>
+        <id>18</id>
+        <message>18 room</message>
+        <down>19</down>
+        <up>17</up>
+    </room>
+    <room>
+        <id>19</id>
+        <message>19 room</message>
+        <right>20</right>
+        <up>18</up>
+    </room>
+    <room>
+        <id>20</id>
+        <message>20 room</message>
+        <right>21</right>
+        <down>22</down>
+        <left>19</left>
+    </room>
+    <room>
+        <id>21</id>
+        <message>21 room</message>
+        <left>20</left>
+    </room>
+    <room>
+        <id>22</id>
+        <message>22 room</message>
+        <down>23</down>
+        <left>24</left>
+        <up>20</up>
+    </room>
+    <room>
+        <id>23</id>
+        <message>23 room</message>
+        <up>22</up>
+    </room>
+    <room>
+        <id>24</id>
+        <message>24 room</message>
+        <down>25</down>
+        <right>22</right>
+    </room>
+    <room>
+        <id>25</id>
+        <message>25 room</message>
+        <left>9</left>
+        <up>24</up>
+    </room>
+</rooms>

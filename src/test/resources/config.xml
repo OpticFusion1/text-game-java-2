@@ -1,0 +1,52 @@
+<rooms>
+    <room>
+        <id>1</id>
+        <message>1 room</message>
+        <left>2</left>
+        <right>3</right>
+        <up>4</up>
+        <down>5</down>
+    </room>
+    <room>
+        <id>2</id>
+        <message>2 room</message>
+        <creatures>
+            <creature>
+                <name>Mob 1</name>
+                <health>50</health>
+                <attack>10</attack>
+                <isBoss>false</isBoss>
+            </creature>
+            <creature>
+                <name>Mob 1</name>
+                <health>50</health>
+                <attack>10</attack>
+                <isBoss>false</isBoss>
+            </creature>
+        </creatures>
+        <right>1</right>
+    </room>
+    <room>
+        <id>3</id>
+        <message>3 room</message>
+        <left>1</left>
+    </room>
+    <room>
+        <id>4</id>
+        <message>4 room</message>
+        <down>1</down>
+    </room>
+    <room>
+        <id>5</id>
+        <message>5 room</message>
+        <creatures>
+            <creature>
+                <name>Big Boss</name>
+                <health>500</health>
+                <attack>50</attack>
+                <isBoss>true</isBoss>
+            </creature>
+        </creatures>
+        <up>1</up>
+    </room>
+</rooms>

@@ -6,7 +6,6 @@ import com.gentooway.game.service.GameService;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.function.Consumer;
 
 import static com.gentooway.game.menu.MenuCommand.*;
 import static com.gentooway.game.service.WorldLoader.loadWorld;
@@ -20,7 +19,7 @@ public class Game {
     private final GameService gameService;
     private World world;
 
-    private Map<MenuCommand, Consumer<String>> commandToHandler = new EnumMap<>(MenuCommand.class);
+    private Map<MenuCommand, Runnable> commandToHandler = new EnumMap<>(MenuCommand.class);
 
     public Game() {
         this.world = loadWorld();
@@ -31,17 +30,17 @@ public class Game {
     }
 
     private void initCommandsMap() {
-        commandToHandler.put(HELP, command -> printMenu());
-        commandToHandler.put(STATS, command -> gameService.showStats());
-        commandToHandler.put(ATTACK, command -> gameService.attackCreature());
-        commandToHandler.put(USE_POTION, command -> gameService.usePotion());
-        commandToHandler.put(NEW_GAME, command -> gameService.createNewGame());
-        commandToHandler.put(MOVE_UP, command -> gameService.moveUp());
-        commandToHandler.put(MOVE_DOWN, command -> gameService.moveDown());
-        commandToHandler.put(MOVE_RIGHT, command -> gameService.moveRight());
-        commandToHandler.put(MOVE_LEFT, command -> gameService.moveLeft());
-        commandToHandler.put(SAVE, command -> gameService.save());
-        commandToHandler.put(LOAD, command -> gameService.load());
+        commandToHandler.put(HELP, this::printMenu);
+        commandToHandler.put(STATS, gameService::showStats);
+        commandToHandler.put(ATTACK, gameService::attackCreature);
+        commandToHandler.put(USE_POTION, gameService::usePotion);
+        commandToHandler.put(NEW_GAME, gameService::createNewGame);
+        commandToHandler.put(MOVE_UP, gameService::moveUp);
+        commandToHandler.put(MOVE_DOWN, gameService::moveDown);
+        commandToHandler.put(MOVE_RIGHT, gameService::moveRight);
+        commandToHandler.put(MOVE_LEFT, gameService::moveLeft);
+        commandToHandler.put(SAVE, gameService::save);
+        commandToHandler.put(LOAD, gameService::load);
     }
 
     public void start() {
@@ -62,8 +61,8 @@ public class Game {
     private void handleCurrentCommand(String command) {
         commandToHandler
                 .getOrDefault(getMenuCommand(command),
-                        value -> System.out.println("Unknown command"))
-                .accept(command);
+                        () -> System.out.println("Unknown command"))
+                .run();
     }
 
     private void printMenu() {

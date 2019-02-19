@@ -51,6 +51,7 @@ public class Game {
 
         while (!EXIT.getValue().equals(command)) {
             handleCurrentCommand(command);
+            printMenu();
 
             command = scanner.nextLine();
         }
@@ -66,8 +67,11 @@ public class Game {
     }
 
     private void printMenu() {
+        System.out.println();
+        System.out.println("What would you like to do next? Write one of the following commands:");
         for (MenuCommand command : valuesForState(world.getState())) {
-            System.out.println(command.getValue());
+            System.out.println(" * " + command.getValue());
         }
+        System.out.println();
     }
 }

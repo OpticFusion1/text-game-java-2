@@ -210,25 +210,27 @@ public class GameService {
     public void attackCreature() {
         List<Creature> aliveCreatures = getAliveCreatures();
 
-        Character character = world.getCharacter();
-        Creature creature = aliveCreatures.get(0);
-        System.out.println("Attacking \"" + creature.getName() + "\" creature.");
-        System.out.println(creature);
+        if (!aliveCreatures.isEmpty()) {
+            Character character = world.getCharacter();
+            Creature creature = aliveCreatures.get(0);
+            System.out.println("Attacking \"" + creature.getName() + "\" creature.");
+            System.out.println(creature);
 
-        Integer characterAttack = character.getAttack();
-        Integer creatureNewHealth = creature.getHealth() - characterAttack;
-        creature.setHealth(creatureNewHealth);
-        System.out.println("You have damaged the creature for " + character.getAttack());
+            Integer characterAttack = character.getAttack();
+            Integer creatureNewHealth = creature.getHealth() - characterAttack;
+            creature.setHealth(creatureNewHealth);
+            System.out.println("You have damaged the creature for " + character.getAttack());
 
-        Integer creatureAttack = creature.getAttack();
-        Integer characterNewHealth = character.getHealth() - creatureAttack;
-        character.setHealth(characterNewHealth);
-        System.out.println("You have got " + creatureAttack + " damage");
+            Integer creatureAttack = creature.getAttack();
+            Integer characterNewHealth = character.getHealth() - creatureAttack;
+            character.setHealth(characterNewHealth);
+            System.out.println("You have got " + creatureAttack + " damage");
 
-        checkCharacterHealth(character);
-        checkCreatureHealth(creature);
+            checkCharacterHealth(character);
+            checkCreatureHealth(creature);
 
-        checkCreatures();
+            checkCreatures();
+        }
     }
 
     /**

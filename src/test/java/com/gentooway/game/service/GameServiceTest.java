@@ -241,7 +241,7 @@ class GameServiceTest {
         assertThat(character.getLevel(), is(5));
         assertThat(character.getAttack(), is(20));
         assertThat(character.getHealth(), is(130));
-        assertThat(character.getPotionCharges(), is(10));
+        assertThat(character.getPotionCharges(), is(11));
     }
 
     @Test
